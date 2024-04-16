@@ -13,7 +13,7 @@ services:
   client-gateway:
     build: ./client-gateway
     ports:
-      - "${CLIENT_GATEWAY_PORT}:3000"
+      - ${CLIENT_GATEWAY_PORT}:3000
     volumes:
       - ./client-gateway/src:/usr/src/app/src
     command: npm run start:dev
@@ -31,11 +31,12 @@ services:
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=file:./dev.db
 
-  #Orders ms
+  
+  # Orders MS
   orders-ms:
     depends_on:
       - orders-db
-    build: /orders-ms
+    build: ./orders-ms
     volumes:
       - ./orders-ms/src:/usr/src/app/src
     command: npm run start:dev
@@ -44,7 +45,9 @@ services:
       - DATABASE_URL=postgresql://postgres:123456@orders-db:5432/ordersdb?schema=public
       - NATS_SERVERS=nats://nats-server:4222
 
-  #Orders DB
+
+
+  # Orders DB
   orders-db:
     container_name: orders_database
     image: postgres:16.2
